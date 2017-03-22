@@ -1,6 +1,9 @@
 <launch>
+	<machine name="tk1" address="zmypc" user="bobin" env-loader="/home/bobin/catkin_ws/src/duo3d_driver/cfg/ric_env.sh" default="false" />
+
+
 	<arg name="pi/2" value="1.5707963267948966" />
-	<node pkg="tf" type="static_transform_publisher" name="duo3d_base_link" args="0 0 0 0 0 $(arg pi/2) /duo3d/camera_frame duo3d_camera 100" />
+	<node machine="tk1" pkg="tf" type="static_transform_publisher" name="duo3d_base_link" args="0 0 0 0 0 $(arg pi/2) /duo3d/camera_frame duo3d_camera 100" />
 
     <node name="duo3d" pkg="duo3d_driver" type="duo3d_driver" output="screen">
 		<param name="frame_rate" value="30.0"/>

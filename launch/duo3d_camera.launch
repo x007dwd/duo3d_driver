@@ -1,5 +1,7 @@
 <launch>
-     <node name="duo3d" pkg="duo3d_driver" type="duo3d_driver" output="screen">
+  <machine name="tk1" address="zmypc" user="bobin" env-loader="/home/bobin/catkin_ws/src/duo3d_driver/cfg/ric_env.sh" default="false" />
+
+  <node machine="tk1" name="duo3d" pkg="duo3d_driver" type="duo3d_driver" output="screen">
 		<param name="frame_rate" value="60.0"/>
 		<rosparam param="image_size">[320, 240]</rosparam>
 		<param name="dense3d_license" value="OVMZU-ZHFE2-9K41K-NQL44-WX3DV"/>
@@ -7,5 +9,4 @@
 		<param name="vertical_flip" value="true"/>
 		<param name="led" value="30"/>
     </node>
-	<node pkg="rqt_gui" type="rqt_gui" name="rqt_gui" args="--perspective-file $(find duo3d_driver)/launch/rqt/stereo_view.perspective"/>
 </launch>
