@@ -1,4 +1,7 @@
 #DUO3D Driver for ROS 
+为了能够在机器人和地面站之间进行任务分配，还是把代码分成两个版本，在其中添加不同的配置文件以进行多机器launch。
+
+这里是机器人端。
 
 The `duo3d_driver` ROS node interfaces with DUO SDK and publishes stereo images, disparity, point cloud, and IMU data from the DUO3D sensor. This package is build on Ubuntu 16.04.1 LTS x64 running ROS Kinetic.
 
