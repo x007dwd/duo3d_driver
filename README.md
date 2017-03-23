@@ -1,9 +1,23 @@
-#DUO3D Driver for ROS 
+# DUO3D Driver for ROS
+## 简要介绍
+使用ros的好处就是不用SDK还要研究一下，测试的时候不要在SDK的example中，挨个那个比较合适的example，然后把那个代码修改一下那过来自己用。这样可把相机接在一个笔记本或者机器人上，跑一圈去采数据，rosbag数据可以以后直接使用。
 
-经过测试发现，DUO 3D需要在使用nvidia显卡的机器上使用。恰好我的PC上没有用N卡，所以我把相机放到机器人上。这边用来显示。这边修改了launch文件，用于在把采集节点放在机器人上，把rqt、rviz等显示放在PC上。
+这里的代码给出使用rviz和rqt完成显示的效果。经过测试发现，DUO 3D需要在使用nvidia显卡的机器上使用。恰好我的PC上没有用N卡，所以我把相机放到机器人上。这边用来显示。这边修改了launch文件，用于在把采集节点放在机器人上，把rqt、rviz等显示放在PC上。
+
+## DUO3D
+### 优点
+1. 双目，可以三位重建，得到点云。
+2. 内部自带IMU，可以用来完成融合。
+
+### 缺点
+1. 自带标定工具，这里没有使用棋盘格的形式，使用的是圆形点排列。每次只取40个图像，这样数量是固定的，然后在去挑选合适的位姿点，这样容易失败。可以考虑使用kalibr。
+2. 需要使用Nvidia卡，如果是在机器人上，有些是没有的，感觉这点比较坑。
+3. 基线有点短，焦距有点小。
+
+# Original ReadMe
 The `duo3d_driver` ROS node interfaces with DUO SDK and publishes stereo images, disparity, point cloud, and IMU data from the DUO3D sensor. This package is build on Ubuntu 16.04.1 LTS x64 running ROS Kinetic.
 
-##Introduction
+## Introduction
 The DUO MLX is an ultra-compact imaging sensor with global shutter and a standard USB interface for ease of use and connectivity. The DUO is intended for use in research, autonomous navigation, robotics and industrial areas. The camera's high speed and small size make it ideal for existing and new use cases for vision based applications.
 
 ![DUO MLX](https://duo3d.com/public/media/products/duo_m_mlx_feb10-136.png)
@@ -24,16 +38,16 @@ The DUO line of sensors offer a versatile board level solution for 3D sensing, a
 
 For more information visit [DUO3D Home Page](https://duo3d.com)
 
-##Installation
+## Installation
 
-###DUO SDK
-The DUO SDK package is required for DUO device support under your Linux operating system. It consists of kernel module and user mode libraries that expose all of the DUO functionalities with a simple and concise C/C++ API. Included in the package is the Dense3D&trade;, an SIMD/NEON optimized multi-threaded library that performs the disparity and 3D data extraction from DUO stereo image pair. 
+### DUO SDK
+The DUO SDK package is required for DUO device support under your Linux operating system. It consists of kernel module and user mode libraries that expose all of the DUO functionalities with a simple and concise C/C++ API. Included in the package is the Dense3D&trade;, an SIMD/NEON optimized multi-threaded library that performs the disparity and 3D data extraction from DUO stereo image pair.
 
  * To download the DUO SDK visit the [Download page](https://duo3d.com/docs/downloads)
  * To install the DUO SDK follow the [Install guide](https://duo3d.com/docs/articles/install-all)
 
-###DUO ROS package
-DUO ROS driver is developed and supported in ROS Kinetic. 
+### DUO ROS package
+DUO ROS driver is developed and supported in ROS Kinetic.
 
 Get the package from github and put it in your catkin workspace ''src'' folder:
 
@@ -48,7 +62,7 @@ Build the package:
     $ source ./devel/setup.bash
 
 
-###Published Topics
+### Published Topics
 The `duo3d_driver` node interfaces with DUO SDK and publishes images, disparity, point cloud, and IMU data from the DUO3D sensor.
 
  * /duo3d_driver/left/image_rect (sensor_msgs/Image)
@@ -72,7 +86,7 @@ The `duo3d_driver` node interfaces with DUO SDK and publishes images, disparity,
  * /duo3d_driver/imu/data_raw (sensor_msgs/Imu)
  DUO IMU data
 
-###Parameters
+### Parameters
 * `~frame_rate` (double, default: 30)
 DUO image capture frame rate
 * `~image_size` (vector<int>, default: {640,480})
@@ -116,11 +130,11 @@ Dense3D Speckle Window Size [0, 256]
 * `~speckle_range` (int, default: 14)
 Dense3D Speckle Range [0, 32]
 
-##Testing the DUO ROS package
+## Testing the DUO ROS package
 Make sure that DUO device is plugged in the USB port and it is operating properly.
 
-###DUO ROS Camera Example
-This example demonstrates the acquisition of rectified stereo image pair from DUO. 
+### DUO ROS Camera Example
+This example demonstrates the acquisition of rectified stereo image pair from DUO.
 To launch DUO Camera ROS example, in a terminal run the following command:
 
     $ roslaunch duo3d_driver duo3d_camera.launch
@@ -128,25 +142,25 @@ To launch DUO Camera ROS example, in a terminal run the following command:
 You should see the following:
 ![DUO ROS Camera Example](https://duo3d.com/public/media/products/ROS-DUO-Camera.jpg)
 
-###DUO ROS IMU Example
+### DUO ROS IMU Example
 This example demonstrates the DUO's on-board 6DoF sensor fusion using Madgwick algorithm running at 100Hz.
 To launch DUO IMU ROS example, in a terminal run the following command:
 
     $ roslaunch duo3d_driver duo3d_imu.launch
- 
+
 You should see the following:
 ![DUO ROS IMU Example](https://duo3d.com/public/media/products/ROS-DUO-IMU.jpg)
 
-###DUO ROS Point Cloud Example
-This example demonstrates disparity and point cloud generation using DUO. 
+### DUO ROS Point Cloud Example
+This example demonstrates disparity and point cloud generation using DUO.
 To launch DUO IMU Point Cloud example, in a terminal run the following command:
 
     $ roslaunch duo3d_driver duo3d_depth.launch
- 
+
 You should see the following:
 ![DUO ROS Point Cloud Example](https://duo3d.com/public/media/products/ROS-DUO-PointCloud.jpg)
 
-##Getting Help
+## Getting Help
 
  * For general help regarding DUO, you can visit the official [DUO forum](https://duo3d.com/forums)
  * For more information about DUO API please visit [DUO SDK](https://duo3d.com/docs/articles/sdk)
