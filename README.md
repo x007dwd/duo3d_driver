@@ -1,4 +1,5 @@
 #DUO3D Driver for ROS 
+
 经过测试发现，DUO 3D需要在使用nvidia显卡的机器上使用。恰好我的PC上没有用N卡，所以我把相机放到机器人上。这边用来显示。这边修改了launch文件，用于在把采集节点放在机器人上，把rqt、rviz等显示放在PC上。
 The `duo3d_driver` ROS node interfaces with DUO SDK and publishes stereo images, disparity, point cloud, and IMU data from the DUO3D sensor. This package is build on Ubuntu 16.04.1 LTS x64 running ROS Kinetic.
 
