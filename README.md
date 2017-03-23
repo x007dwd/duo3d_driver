@@ -1,8 +1,8 @@
 # DUO3D Driver for ROS
 ## 简要介绍
-使用ros的好处就是不用SDK还要研究一下，测试的时候不要在SDK的example中，挨个那个比较合适的example，然后把那个代码修改一下那过来自己用。这样可把相机接在一个笔记本或者机器人上，跑一圈去采数据，rosbag数据可以以后直接使用。
+使用ros的好处就是不用还要研究一下SDK，使用的时候不需要在SDK的example中，挨个那个比较合适的example，然后把那个代码修改一下那过来自己用。这样可把相机接在一个笔记本或者机器人上，跑一圈去采数据，rosbag数据可以以后直接使用。
 
-这里的代码给出使用rviz和rqt完成显示的效果。经过测试发现，DUO 3D需要在使用nvidia显卡的机器上使用。恰好我的PC上没有用N卡，所以我把相机放到机器人上。这边用来显示。这边修改了launch文件，用于在把采集节点放在机器人上，把rqt、rviz等显示放在PC上。
+这里的代码给出使用rviz和rqt完成显示。经过测试发现，DUO 3D需要在使用nvidia显卡的机器上使用。恰好我的PC上没有用N卡，所以我把相机放到机器人上。这边用来显示。PC的版本修改了launch文件，用于在把采集节点放在机器人上，把rqt、rviz等显示放在PC上。
 
 ## DUO3D
 ### 优点
@@ -13,6 +13,8 @@
 1. 自带标定工具，这里没有使用棋盘格的形式，使用的是圆形点排列。每次只取40个图像，这样数量是固定的，然后在去挑选合适的位姿点，这样容易失败。可以考虑使用kalibr。
 2. 需要使用Nvidia卡，如果是在机器人上，有些是没有的，感觉这点比较坑。
 3. 基线有点短，焦距有点小。
+4. 如果想要使用ARM版的SDK，还需要加入DUO的developer计划，还得交钱，真是无语。
+
 
 # Original ReadMe
 The `duo3d_driver` ROS node interfaces with DUO SDK and publishes stereo images, disparity, point cloud, and IMU data from the DUO3D sensor. This package is build on Ubuntu 16.04.1 LTS x64 running ROS Kinetic.
