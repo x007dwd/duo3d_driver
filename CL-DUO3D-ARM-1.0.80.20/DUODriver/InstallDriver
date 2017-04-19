@@ -1,0 +1,3 @@
+cp duo.ko /lib/modules/$(uname -r)/kernel/drivers/duo.ko
+echo 'duo' >> /etc/modules
+depmod

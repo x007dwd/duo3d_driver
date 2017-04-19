@@ -18,7 +18,9 @@ find_package(catkin REQUIRED COMPONENTS
              cv_bridge
 )
 
+
 generate_dynamic_reconfigure_options(cfg/Duo3D.cfg)
+
 
 catkin_package()
 
@@ -27,6 +29,7 @@ include_directories(include
                     ${OpenCV_INCLUDE_DIRS} 
                     ${PCL_INCLUDE_DIRS}
 )
+
 
 add_definitions(-std=c++11)
 
